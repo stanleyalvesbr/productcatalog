@@ -1,0 +1,11 @@
+C:\Cursos\dev\ProductCatalog\bin\Debug\netcoreapp2.0\ProductCatalog.deps.json
+C:\Cursos\dev\ProductCatalog\bin\Debug\netcoreapp2.0\ProductCatalog.runtimeconfig.json
+C:\Cursos\dev\ProductCatalog\bin\Debug\netcoreapp2.0\ProductCatalog.runtimeconfig.dev.json
+C:\Cursos\dev\ProductCatalog\bin\Debug\netcoreapp2.0\ProductCatalog.dll
+C:\Cursos\dev\ProductCatalog\bin\Debug\netcoreapp2.0\ProductCatalog.pdb
+C:\Cursos\dev\ProductCatalog\obj\Debug\netcoreapp2.0\ProductCatalog.csprojAssemblyReference.cache
+C:\Cursos\dev\ProductCatalog\obj\Debug\netcoreapp2.0\ProductCatalog.csproj.CoreCompileInputs.cache
+C:\Cursos\dev\ProductCatalog\obj\Debug\netcoreapp2.0\ProductCatalog.AssemblyInfoInputs.cache
+C:\Cursos\dev\ProductCatalog\obj\Debug\netcoreapp2.0\ProductCatalog.AssemblyInfo.cs
+C:\Cursos\dev\ProductCatalog\obj\Debug\netcoreapp2.0\ProductCatalog.dll
+C:\Cursos\dev\ProductCatalog\obj\Debug\netcoreapp2.0\ProductCatalog.pdb
