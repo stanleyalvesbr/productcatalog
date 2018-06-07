@@ -25,7 +25,7 @@ namespace ProductCatalog
                app.UseDeveloperExceptionPage();
            
 
-            app.UseMvc;
+            app.UseMvc();
 
 
             // app.Run(async (context) =>
