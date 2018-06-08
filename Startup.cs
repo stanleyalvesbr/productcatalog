@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using ProductCatalog.Data;
 
 namespace ProductCatalog
 {
@@ -16,6 +17,8 @@ namespace ProductCatalog
         public void ConfigureServices(IServiceCollection services)
         {
            services.AddMvc();
+           services.AddScoped<StoreDataContext, StoreDataContext>(); // Verifica se já existe uma aberta
+           //services.AddTransient<StoreDataContext, StoreDataContext>(); Abre sempre uma nova
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
