@@ -31,7 +31,9 @@ namespace ProductCatalog.Controllers
                     Title = x.Title,
                     Price = x.Price,
                     Category = x.Category.Title,
-                    CategoryId = x.Category.Id
+                    CategoryId = x.Category.Id,
+                    Description = x.Description,
+                    Quantiity = x.Quantity
                 })
                 .AsNoTracking()
                 .ToList();
@@ -44,6 +46,114 @@ namespace ProductCatalog.Controllers
         {
             return _context.Products.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
         }
+
+        [Route("v1/products")]
+        [HttpPost]
+        public ResultViewModel Post([FromBody]EditorProductViewModel model)
+        {
+            model.Validate();
+            if(model.Invalid)
+               return new ResultViewModel
+               {
+                   Success = false,
+                   Message = "Não foi possível cadastrar produto",
+                   Data = model.Notifications
+               };
+
+            var product = new Product();
+            product.Title = model.Title;
+            product.CategoryId = model.CategoryId;
+            product.CreateDate = DateTime.Now;
+            product.Description = model.Description;
+            product.Image = model.Image;
+            product.LastUpdateDate =  DateTime.Now;
+            product.Price =  model.Price;
+            product.Quantity = model.Quantity;
+
+            _context.Products.Add(product);
+            _context.SaveChanges();
+
+            return new ResultViewModel
+            {
+                Success = true,
+                Message = "Produto cadastrado com sucesso",
+                Data = product
+            };
+            
+        }
+
+
+
+        [Route("v1/products")]
+        [HttpPut]
+        public ResultViewModel Put([FromBody]EditorProductViewModel model)
+        {
+            model.Validate();
+            if(model.Invalid)
+               return new ResultViewModel
+               {
+                   Success = false,
+                   Message = "Não foi possível cadastrar produto",
+                   Data = model.Notifications
+               };
+
+            var product = _context.Products.Find(model.Id);
+            product.Title = model.Title;
+            product.CategoryId = model.CategoryId;
+            product.CreateDate = DateTime.Now;
+            product.Description = model.Description;
+            product.Image = model.Image;
+            product.LastUpdateDate =  DateTime.Now;
+            product.Price =  model.Price;
+            product.Quantity = model.Quantity;
+
+            _context.Products.Update(product);
+            _context.SaveChanges();
+
+            return new ResultViewModel
+            {
+                Success = true,
+                Message = "Produto alterado com sucesso",
+                Data = product
+            };
+            
+        }
+
+        [Route("v1/products")]
+        [HttpDelete]
+        public ResultViewModel Delete([FromBody]EditorProductViewModel model)
+        {
+            model.Validate();
+            if(model.Invalid)
+               return new ResultViewModel
+               {
+                   Success = false,
+                   Message = "Não foi possível Excluir produto",
+                   Data = model.Notifications
+               };
+
+            var product = _context.Products.Find(model.Id);
+            product.Title = model.Title;
+            product.CategoryId = model.CategoryId;
+            product.CreateDate = DateTime.Now;
+            product.Description = model.Description;
+            product.Image = model.Image;
+            product.LastUpdateDate =  DateTime.Now;
+            product.Price =  model.Price;
+            product.Quantity = model.Quantity;
+
+            _context.Products.Remove(product);
+            _context.SaveChanges();
+
+            return new ResultViewModel
+            {
+                Success = true,
+                Message = "Produto Excluído com sucesso",
+                Data = product
+            };
+            
+        }
+
 
 
 
