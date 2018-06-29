@@ -5,65 +5,130 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using ProductCatalog.Data;
 using ProductCatalog.Models;
-
+using ProductCatalog.Repositories;
+using ProductCatalog.ViewModels.CategoryViewModels;
+using ProductCatalog.ViewModels.ProductViewModels;
 
 namespace ProductCatalog.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly StoreDataContext _context;
-        public CategoryController(StoreDataContext context)
+        private readonly CategoryRepository _repository;
+        public CategoryController(CategoryRepository repository)
         {
-           _context = context;
+           _repository = repository;
         }
 
         [Route("v1/categories")]
         [HttpGet]
 
-        public IEnumerable<Category> Get()
+       public IEnumerable<Category> Get()
         {
-            return _context.Categories.AsNoTracking().ToList();
+            return _repository.Get();
         }
+
 
         [Route("v1/categories/{id}")]
         [HttpGet]
         public Category Get(int id)
         {
-           return _context.Categories.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
+           //return _context.Categories.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
+           return _repository.Get(id);
         }
 
         [Route("v1/categories/{id}/products")]
         [HttpGet]
         public IEnumerable<Product> GetProducts(int id)
         {
-             return _context.Products.AsNoTracking().Where(x => x.CategoryId == id).ToList() ;
-        }
+           return _repository.GetProducts(id);
+        } 
+
 
         [Route("v1/categories")]
         [HttpPost]
-        public Category Post([FromBody]Category category)
+       public ResultViewModel Post([FromBody]EditorCategoryViewModel model)
         {
-          _context.Categories.Add(category);
-          _context.SaveChanges();
-          return category;
+            model.Validate();
+            if(model.Invalid)
+               return new ResultViewModel
+               {
+                   Success = false,
+                   Message = "Não foi possível cadastrar Categoria",
+                   Data = model.Notifications
+               };
+
+            var category = new Category();
+            category.Title = model.Title;
+            
+            _repository.Save(category);
+
+
+            return new ResultViewModel
+            {
+                Success = true,
+                Message = "Categoria cadastrado com sucesso",
+                Data = category
+            };
+            
         }
 
         [Route("v1/categories")]
         [HttpPut]
-        public Category Put([FromBody]Category category)
+        
+        public ResultViewModel Put([FromBody]EditorCategoryViewModel model)
         {
-            _context.Entry<Category>(category).State = EntityState.Modified;
-            _context.SaveChanges();
-            return category;
+            model.Validate();
+            if(model.Invalid)
+               return new ResultViewModel
+               {
+                   Success = false,
+                   Message = "Não foi possível cadastrar Categoria",
+                   Data = model.Notifications
+               };
+
+            var category = _repository.Get(model.Id);
+            category.Title = model.Title;
+            
+            _repository.Update(category);
+ 
+
+            return new ResultViewModel
+            {
+                Success = true,
+                Message = "Categoria alterada com sucesso",
+                Data = category
+            };
+            
         }
 
         [Route("v1/categories")]
         [HttpDelete]
-        public Category Delete([FromBody]Category category)
+        
+        public ResultViewModel Delete([FromBody]EditorCategoryViewModel model)
         {
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
-            return category;
+            model.Validate();
+            if(model.Invalid)
+               return new ResultViewModel
+               {
+                   Success = false,
+                   Message = "Não foi possível Excluir Categoria",
+                   Data = model.Notifications
+               };
+
+            var category = _repository.Get(model.Id);
+            category.Title = model.Title;           
+
+            _repository.Delete(category);
+
+            return new ResultViewModel
+            {
+                Success = true,
+                Message = "Categoria Excluída com sucesso",
+                Data = category
+            };
+            
         }
+        
+    
     }
 }

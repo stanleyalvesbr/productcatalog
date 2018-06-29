@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using ProductCatalog.Data;
+using ProductCatalog.Repositories;
 
 namespace ProductCatalog
 {
@@ -18,6 +19,8 @@ namespace ProductCatalog
         {
            services.AddMvc();
            services.AddScoped<StoreDataContext, StoreDataContext>(); // Verifica se já existe uma aberta
+           services.AddTransient<ProductRepository, ProductRepository>();
+           services.AddTransient<CategoryRepository, CategoryRepository>();
            //services.AddTransient<StoreDataContext, StoreDataContext>(); Abre sempre uma nova
         }
 
