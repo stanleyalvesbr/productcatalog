@@ -10,7 +10,7 @@ namespace ProductCatalog.Data
         public DbSet<Category> Categories { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=servidordb.database.windows.net,1433;Database=sqldb;User ID=stanleyalves;Password=Cqzp798371foca001@");
+           //aqui entra a string de conexão
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
