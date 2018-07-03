@@ -18,23 +18,25 @@ namespace ProductCatalog.Controllers
         }
 
 
-        [Route("v1/products")]
+        
         [HttpGet]
+        [Route("v1/products")]
         public IEnumerable<ListProductViewModel> Get()
         {
             return _repository.Get(); 
         }
 
-        [Route("v1/products/{id}")]
+       
         [HttpGet]
-
+        [Route("v1/products/{id}")]
         public Product Get(int id)
         {
             return _repository.Get(id);
         }
 
-        [Route("v1/products")]
+        
         [HttpPost]
+        [Route("v1/products")]
         public ResultViewModel Post([FromBody]EditorProductViewModel model)
         {
             model.Validate();
@@ -68,10 +70,9 @@ namespace ProductCatalog.Controllers
             
         }
 
-
-
-        [Route("v1/products")]
+        
         [HttpPut]
+        [Route("v1/products")]
         public ResultViewModel Put([FromBody]EditorProductViewModel model)
         {
             model.Validate();
@@ -106,8 +107,9 @@ namespace ProductCatalog.Controllers
             
         }
 
-        [Route("v1/products")]
+        
         [HttpDelete]
+        [Route("v1/products")]
         public ResultViewModel Delete([FromBody]EditorProductViewModel model)
         {
             model.Validate();

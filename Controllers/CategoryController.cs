@@ -19,34 +19,38 @@ namespace ProductCatalog.Controllers
            _repository = repository;
         }
 
-        [Route("v1/categories")]
+        
         [HttpGet]
-
-       public IEnumerable<Category> Get()
+        [Route("v1/categories")]
+        //[ResponseCache(Location = ResponseCacheLocation.Client, Duration = 60)] // Armazenar no cliente
+        public IEnumerable<Category> Get()
         {
             return _repository.Get();
         }
 
 
-        [Route("v1/categories/{id}")]
         [HttpGet]
+        [Route("v1/categories/{id}")] 
+        //[ResponseCache(Duration = 60)]
         public Category Get(int id)
         {
            //return _context.Categories.AsNoTracking().Where(x => x.Id == id).FirstOrDefault();
            return _repository.Get(id);
         }
 
-        [Route("v1/categories/{id}/products")]
+        
         [HttpGet]
+        [Route("v1/categories/{id}/products")]
+        [ResponseCache(Duration = 60)]
         public IEnumerable<Product> GetProducts(int id)
         {
            return _repository.GetProducts(id);
         } 
 
 
-        [Route("v1/categories")]
         [HttpPost]
-       public ResultViewModel Post([FromBody]EditorCategoryViewModel model)
+        [Route("v1/categories")]
+        public ResultViewModel Post([FromBody]EditorCategoryViewModel model)
         {
             model.Validate();
             if(model.Invalid)
@@ -72,8 +76,9 @@ namespace ProductCatalog.Controllers
             
         }
 
-        [Route("v1/categories")]
+        
         [HttpPut]
+        [Route("v1/categories")]
         
         public ResultViewModel Put([FromBody]EditorCategoryViewModel model)
         {
@@ -101,9 +106,9 @@ namespace ProductCatalog.Controllers
             
         }
 
-        [Route("v1/categories")]
-        [HttpDelete]
         
+        [HttpDelete]
+        [Route("v1/categories")]
         public ResultViewModel Delete([FromBody]EditorCategoryViewModel model)
         {
             model.Validate();
